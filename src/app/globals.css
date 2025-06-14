@@ -1,0 +1,50 @@
+:root {
+  --background: #141414;
+  --foreground: #e7e7e7;
+  --background2: #383838;
+  --foreground2: #e8eaff;
+  --accent2: #181818;
+  --primary: #1053a0;
+  --secondary: #fff788;
+  --accent: #2c2c2c;
+  --border: #eaeaea;
+  --shadow: rgba(0, 0, 0, 0.1);
+  --link: #0070f3;
+  --link-hover: #0366d6;
+  --font-geist-sans: var(--geist-font-sans);
+  --font-geist-mono: var(--geist-font-mono);
+  --font-geist-mono-italic: var(--geist-font-mono-italic);
+  --font-geist-mono-bold: var(--geist-font-mono-bold);
+  --font-geist-mono-bold-italic: var(--geist-font-mono-bold-italic);
+  --font-geist-mono-light: var(--geist-font-mono-light);
+  --font-color: var(--foreground);
+}
+
+html, body{
+  height: 100dvh;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: black;
+  font-family: var(--font-geist-sans);
+}
+body {
+  background-color: var(--background);
+  color: var(--font-color);
+  display: flex;
+  flex-direction: column;
+}
+
+main{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+input {
+  border-radius: 5px;
+  border: none;
+}
