@@ -53,6 +53,7 @@
 
 .sidebar_content{/*holds the sidebar items*/
     flex: 1;
+    overflow-y: auto;
 }
 .sidebar_content > * {/*individual sidebar item*/
     display: flex;
