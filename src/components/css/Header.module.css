@@ -14,30 +14,12 @@
     width: 100%;
 }
 
-.menuButtonDiv{
-    flex: 0.0;
-    min-width: 30px;
-    border: none;
-}
-.menuButtonDiv button{
-    background-color: var(--secondary);
-    color: var(--accent);
-    padding: 5px;
-    aspect-ratio: 1 / 1;;
-    border-radius: 10px;
-    border: none;
-    cursor: pointer;
-}
-.menuButtonDiv svg{
-    height: 15px;
-    width: 15px;
-    padding: 0;
-    margin: 0;    
-}
-
 .titleContainer{
     flex: 1;
     min-width: 50dvw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .loginContainer{
@@ -45,7 +27,7 @@
     flex-direction: row;
     align-items: center;
     justify-content: end;
-    flex: 0.7;
+    flex: 0;
 }
 .loginContainer button{
     background-color: var(--secondary);

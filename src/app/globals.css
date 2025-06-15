@@ -18,6 +18,9 @@
   --font-geist-mono-bold-italic: var(--geist-font-mono-bold-italic);
   --font-geist-mono-light: var(--geist-font-mono-light);
   --font-color: var(--foreground);
+
+  --sidebar-width: 300px;
+  --sidebar-width-collapsed: 40px;
 }
 
 html, body{

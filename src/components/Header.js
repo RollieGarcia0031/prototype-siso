@@ -6,7 +6,6 @@ import Link from 'next/link';
 export default function Header() {
     return (
         <header className={styles.header}>
-            <div className={styles.menuButtonDiv}><button><GiHamburgerMenu /></button></div>
             <div className={styles.titleContainer}>{appName}</div>
             <div className={styles.loginContainer}>
                 <div></div>
@@ -15,3 +14,5 @@ export default function Header() {
         </header>
     )
 }
+
+export {isCollapsed, setIsCollapsed};

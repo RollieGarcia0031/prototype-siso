@@ -24,6 +24,20 @@ export async function AUTH_createAccount(email, password){
         throw error;
     }
 }
+
+//getters
+export async function isLoggedIn(){
+    return auth.currentUser || await new Promise((res, rej)=>{
+        onAuthStateChanged(auth, (user)=>{
+            if(user){
+                res(user);
+            }
+            else{
+                res(null);
+            }
+        });
+    });
+}
 // export async function createAccount(email, password) {
 //   try {
 //     const userCredential = await createUserWithEmailAndPassword(auth, email, password);

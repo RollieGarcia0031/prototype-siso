@@ -1,0 +1,81 @@
+.sidebar{
+    width: var(--sidebar-width);
+    background-color: var(--background2);
+    height: 100dvh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    padding: 20px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.sidebar p{ 
+    margin: 0;
+    white-space: nowrap;
+}
+
+.sidebar_collapse_container .sidebar_content .sidebar_footer{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    flex-direction: column;
+}
+
+.sidebar.collapsed{
+    width: var(--sidebar-width-collapsed);
+    padding: 20px 10px;
+}
+
+.sidebar_collapse_container{/*holds the collapse button*/
+    height: 10dvh;
+}
+
+.sidebar_collapse_container button{
+    width: var(--sidebar-width-collapsed);
+    aspect-ratio: 1 / 1;
+    background-color: var(--secondary);
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.sidebar_collapse_container button svg{
+    width: 100%;
+    height: 100%;
+}
+
+.sidebar_content{/*holds the sidebar items*/
+    flex: 1;
+}
+.sidebar_content > div {/*individual sidebar item*/
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    background-color: var(--background);
+    margin-bottom: 10px;
+    overflow: hidden;
+    transition: all 300ms ease;
+}
+.sidebar_content > div.selected{
+    background-color: var(--primary);
+    color: var(--secondary);
+    transition: all 300ms ease;
+}
+
+.sidebar_item_icon{/*div holding svg*/
+    width: var(--sidebar-width-collapsed);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
