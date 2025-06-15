@@ -5,6 +5,8 @@ import style from "@/components/css/SideBar.module.css"
 import { CiCircleChevLeft } from "react-icons/ci";
 import { IoHomeOutline, IoDiscOutline,IoMusicalNotesOutline } from "react-icons/io5";
 import { FaRegNewspaper } from "react-icons/fa";
+import Link from "next/link";
+import { usePathname } from 'next/navigation';
 
 import { isLoggedIn } from "@/firebase/auth";
 
@@ -40,6 +42,8 @@ export default function Sidebar(){
 
 
 function SidebarAuth({isCollapsed, setIsCollapsed, selectedItem, setSelectedItem}){
+    const pathname = usePathname();
+
     return(
         <div className={`${style.sidebar}  ${isCollapsed ? style.collapsed : ''}`}>
             <div className={style.sidebar_collapse_container}>
@@ -49,10 +53,10 @@ function SidebarAuth({isCollapsed, setIsCollapsed, selectedItem, setSelectedItem
             </div>
 
             <div className={style.sidebar_content}>
-                <SidebarItem icon={<IoHomeOutline />} text="Dashboard" />
-                <SidebarItem icon={<FaRegNewspaper />} text="Feed" />
-                <SidebarItem icon={<IoDiscOutline />} text="Profile" />
-                <SidebarItem icon={<IoMusicalNotesOutline />} text="My Songs" />
+                <SidebarItem icon={<IoHomeOutline />} text="Dashboard" href="/" />
+                <SidebarItem icon={<FaRegNewspaper />} text="Feed" href="/feed" />
+                <SidebarItem icon={<IoDiscOutline />} text="Profile" href="/profile" />
+                <SidebarItem icon={<IoMusicalNotesOutline />} text="My Songs" href="/songs" />
             </div>
 
             <div className={style.sidebar_footer}>
@@ -61,15 +65,18 @@ function SidebarAuth({isCollapsed, setIsCollapsed, selectedItem, setSelectedItem
         </div>
     );    
 
-    function SidebarItem({icon, text}){
+    function SidebarItem({icon, text, href}){
+        const isActive = pathname === href;
+
         return(
-            <div 
-                className={selectedItem === text ? style.selected : ''}
+            <Link
+                className={`${isActive ? style.selected : ''}`}
+                href={href}
                 onClick={handleClick}    
             >
                 <div className={style.sidebar_item_icon}>{icon}</div>
                 {!isCollapsed ? <p>{text}</p> : null}
-            </div>
+            </Link>
         )
 
         function handleClick(){
