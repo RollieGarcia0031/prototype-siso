@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import style from "@/components/css/SideBar.module.css"
 import { CiCircleChevLeft } from "react-icons/ci";
-import { IoHomeOutline, IoDiscOutline,IoMusicalNotesOutline } from "react-icons/io5";
+import { IoHomeOutline, IoDiscOutline,IoMusicalNotesOutline, IoLogOutOutline, IoSettingsOutline  } from "react-icons/io5";
 import { FaRegNewspaper } from "react-icons/fa";
 import Link from "next/link";
 import { usePathname } from 'next/navigation';
@@ -60,7 +60,8 @@ function SidebarAuth({isCollapsed, setIsCollapsed, selectedItem, setSelectedItem
             </div>
 
             <div className={style.sidebar_footer}>
-
+                <SidebarItem icon={<IoLogOutOutline />} text="Logout" href="/logout" />
+                <SidebarItem text="Settings" href="/settings" icon={<IoSettingsOutline />}/>
             </div>
         </div>
     );    

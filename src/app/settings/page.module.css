@@ -1,0 +1,43 @@
+.container {
+    padding: 20px;
+    margin-left: var(--sidebar-width);
+    min-height: 100dvh;
+    background-color: var(--background);
+    color: var(--text);
+}
+
+.settings-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.settings-section {
+    background-color: var(--background2);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.settings-section h2 {
+    margin-bottom: 20px;
+    color: var(--primary);
+}
+
+.setting-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid var(--background);
+}
+
+.setting-item:last-child {
+    border-bottom: none;
+}
+
+@media (max-width: 768px) {
+    .container {
+        margin-left: 0;
+    }
+} 

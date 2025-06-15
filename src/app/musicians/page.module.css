@@ -1,0 +1,39 @@
+.container {
+    padding: 20px;
+    margin-left: var(--sidebar-width);
+    min-height: 100dvh;
+    background-color: var(--background);
+    color: var(--text);
+}
+
+.musicians-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.musicians-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 25px;
+    padding: 20px 0;
+}
+
+.musician-card {
+    background-color: var(--background2);
+    border-radius: 12px;
+    padding: 20px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.musician-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 768px) {
+    .container {
+        margin-left: 0;
+    }
+} 
