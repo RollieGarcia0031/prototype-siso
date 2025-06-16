@@ -1,5 +1,12 @@
-import { createUserWithEmailAndPassword, deleteUser, sendPasswordResetEmail, onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
+import { 
+    createUserWithEmailAndPassword,
+    deleteUser,
+    sendPasswordResetEmail,
+    onAuthStateChanged,
+    signInWithEmailAndPassword
+} from "firebase/auth";
 import { auth }from './config';
+import { DB_getDisplayname } from './firestore'
 
 
 export async function AUTH_login(email, password){
@@ -37,6 +44,17 @@ export async function isLoggedIn(){
             }
         });
     });
+}
+
+export async function AUTH_getUserName(){
+    if(isLoggedIn())return;
+    try {
+        return await DB_getDisplayname();
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+
 }
 // export async function createAccount(email, password) {
 //   try {

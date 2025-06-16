@@ -1,0 +1,25 @@
+.main{
+    width: 50dvw;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.inputSmall{
+    width: auto;
+}
+.inputSmall input{
+    padding: 5px 10px;
+    min-width: 250px;
+}
+.inputLarge textarea{
+    width: 100%;
+    padding: 20px;
+}
+
+.basicInfo{
+    display: grid;
+    grid-template-columns: 0.5fr 0.5fr;
+    grid-template-rows: auto;
+    justify-content: start;
+}

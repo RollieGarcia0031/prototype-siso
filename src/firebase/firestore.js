@@ -1,6 +1,29 @@
-import { db } from "./config";
-import { db } from "./config";
-import { collection, doc, getDoc, setDoc, updateDoc, deleteDoc, query, where, getDocs } from "firebase/firestore"; 
+import { db, auth } from "./config";
+import { usersCollectionRef } from '@/util/constants';
+import {
+    collection,
+    doc,
+    getDoc,
+    setDoc,
+    updateDoc,
+    deleteDoc,
+    query,
+    where,
+    getDocs
+} from "firebase/firestore"; 
+
+//getter
+export async function DB_getDisplayname(USER_ID){
+    try {
+        const docRef = doc(db, usersCollectionRef, USER_ID);
+        const docSnap = await getDoc(docRef);
+
+        return docSnap.exists()? docSnap.data() : null;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+}
 
 // // Function to get a document
 // async function getDocument(collectionName, docId) {

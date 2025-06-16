@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from "react";
+import { usePathname } from 'next/navigation';
 import style from "@/components/css/SideBar.module.css"
 import { CiCircleChevLeft } from "react-icons/ci";
 import { 
@@ -14,9 +15,8 @@ import {
     IoChatbubbleOutline
 } from "react-icons/io5";
 import { FaRegNewspaper } from "react-icons/fa";
-import Link from "next/link";
-import { usePathname } from 'next/navigation';
 
+import Link from "next/link";
 import { isLoggedIn } from "@/firebase/auth";
 
 
@@ -31,7 +31,6 @@ export default function Sidebar(){
             try{
                 const user = await isLoggedIn();
                 setIsAuth(!!user);
-                console.log(user);
             }
             catch(error){
                 console.error(error);
