@@ -3,10 +3,13 @@ import {
     deleteUser,
     sendPasswordResetEmail,
     onAuthStateChanged,
-    signInWithEmailAndPassword
+    signInWithEmailAndPassword,
 } from "firebase/auth";
 import { auth }from './config';
-import { DB_getDisplayname } from './firestore'
+import {
+    DB_getDisplayname,
+    DB_setDisplayName
+} from './firestore'
 
 
 export async function AUTH_login(email, password){
@@ -47,14 +50,33 @@ export async function isLoggedIn(){
 }
 
 export async function AUTH_getUserName(){
-    if(isLoggedIn())return;
+    if(!isLoggedIn())return;
+    console.log('finding username')
     try {
-        return await DB_getDisplayname();
+        return await DB_getDisplayname( (await AUTH_getUser()).uid );
     } catch (error) {
         console.error(error);
         throw error;
     }
+}
 
+export async function AUTH_getUser(){
+    return auth.currentUser || await new Promise((res, rej)=>{
+        onAuthStateChanged(auth, user=>{
+            if(user)res(user)
+        })
+    })
+}
+
+//setters
+export async function AUTH_setUserName(name){
+    if(!isLoggedIn())return;
+    try{
+        await DB_setDisplayName((await AUTH_getUser())?.uid, name);
+    } catch(error){
+        console.log(error);
+        throw error;
+    }
 }
 // export async function createAccount(email, password) {
 //   try {

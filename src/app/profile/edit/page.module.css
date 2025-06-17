@@ -10,16 +10,51 @@
 }
 .inputSmall input{
     padding: 5px 10px;
-    min-width: 250px;
+    min-width: 80%;
 }
 .inputLarge textarea{
-    width: 100%;
-    padding: 20px;
+    width: calc(100% - 30px);
+    padding: 15px;
 }
 
 .basicInfo{
     display: grid;
     grid-template-columns: 0.5fr 0.5fr;
     grid-template-rows: auto;
-    justify-content: start;
+}
+
+.optionButtonHolder{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    width: 100%;
+    position: sticky;
+    top: 0;
+    gap: 5px;
+}
+
+.optionButtonHolder :nth-child(1){
+    flex: 1;
+}
+.backLink{
+    text-decoration: none;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: 3px;
+    padding: 5px;
+    border-radius: 100%;
+    background-color: var(--secondary);
+    color: var(--accent);
+}
+.optionButtonHolder button{
+    background-color: unset;
+    border: 1px solid white;
+    color: white;
+    aspect-ratio: 1 / 1;
+    border-radius: 100%;
+    cursor: pointer;
+}
+.optionButtonHolder svg{
+    font-size: 1.3rem;
 }

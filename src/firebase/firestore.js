@@ -18,10 +18,33 @@ export async function DB_getDisplayname(USER_ID){
         const docRef = doc(db, usersCollectionRef, USER_ID);
         const docSnap = await getDoc(docRef);
 
-        return docSnap.exists()? docSnap.data() : null;
+        console.log('found doc')
+        const displayName = docSnap.get('name');
+        return docSnap.exists()? displayName : null;
     } catch (error) {
         console.error(error);
         throw error;
+    }
+}
+
+
+//setter
+export async function DB_setDisplayName(USER_ID, displayName){
+    try {
+        await setDoc( doc(db, usersCollectionRef, USER_ID),
+            {name: displayName},
+            {merge: true}
+        )
+    } catch (error) {
+        console.error(error)
+        throw error;
+    }
+}
+const user = {
+    id : {
+        name: '',
+        address: '',
+        bio: '',
     }
 }
 
