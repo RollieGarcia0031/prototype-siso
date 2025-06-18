@@ -1,89 +1,127 @@
 'use client';
 
 import {
-    AUTH_getUserName,
-    AUTH_setUserName
+    AUTH_getData,
+    AUTH_setUserData
 } from "@/firebase/auth";
-
+import AlertDialog from '@/components/AlertDialog';
 import styles from './page.module.css';
 import { useRef, useState, useEffect } from 'react'
 import { FaBackspace, FaSave, FaTrash } from 'react-icons/fa';
+import { IoRefreshCircleOutline } from 'react-icons/io5'
 import Link from 'next/link';
-import { VectorValue } from "firebase/firestore";
 
 export default function Edit(){
-    const nameRef = useRef(null);
+    const nameRef = useRef(null);//references for checking initial value, used to auto-enable save button when the value changes
     const addressRef = useRef(null);
     const bioRef = useRef(null);
 
-    const [name, setName] = useState("");
+    const [name, setName] = useState("");//for input values
     const [address, setAddress] = useState("");
     const [bio, setBio] = useState("");
 
+    const [disableSaveButton, setDisableSaveButton] = useState(true);
+
+    const [dialogValue, setDialogValue] = useState('');
+    const [dialogIsOpened, setdialogIsOpened] = useState(false);
+
+    const hooksAndRef = [
+      [name, nameRef.current, setName],
+      [address, addressRef.current, setAddress],
+      [bio, bioRef.current, setBio]
+    ]//paris for easy iteration
+    
     useEffect(()=>{
-        setInputValue(setName, AUTH_getUserName, nameRef);
-        setInputValue(setAddress, AUTH_getUserName, addressRef);
-        setInputValue(setAddress, AUTH_getUserName, bioRef)
+      const unsub = async()=>{
+        try{
+            const {name, address, bio} = await AUTH_getData();
+            setInputValue(setName, name, nameRef);
+            setInputValue(setAddress, address, addressRef);
+            setInputValue(setBio, bio, bioRef);
+        }
+        catch(error){
+            console.error('error');
+        }
+      }//set the initial value from database
+
+      unsub();
     },[])
 
     useEffect(()=>{
-        console.log('changed value')
-    }, [name, address, bio])
+      let changed = false;
+      hooksAndRef.forEach(data => {//iterate through the pairs
+        const [current, initial] = data;
+        if(current != initial) {
+            changed = true
+            console.log('you changed :', current, ' from : ', initial);
+        };//checks if the new input is different from original value
+      })
+
+      setDisableSaveButton(!changed);//disable if no change in data occured
+
+    }, [name, address, bio]);//update save button upon change in inputs
+
+
     return (
       <>
+      <AlertDialog
+        value={dialogValue}
+        isOpened={dialogIsOpened}
+        setIsOpened={setdialogIsOpened}
+        onConfirm={()=>{
+          hooksAndRef.forEach(data => {
+            const [current, initial, setValue] = data;
+            setValue(initial);
+          });
+        }}
+    />
+
+      <div className={styles.main}>
         <div className={styles.optionButtonHolder}>
             <div>
                 <Link href="/profile" className={styles.backLink}><FaBackspace /></Link>
             </div>
-            <button onClick={saveUserInfo}><FaSave /></button>
-            <button><FaTrash /></button>
+            <button onClick={saveUserInfo} disabled={disableSaveButton}><FaSave /></button>
+            <button onClick={resetUserInfo}><IoRefreshCircleOutline /></button>
         </div>
-      <div className={styles.main}>
         <div className={styles.basicInfo}>
-            <InputSmall text="Name:" ref={nameRef} content={name} setContent={setName}/>
-            <InputSmall text="Address:" ref={addressRef} content={address} setContent={setAddress}/>
+            <InputSmall text="Name:" content={name} setContent={setName}/>
+            <InputSmall text="Address:" content={address} setContent={setAddress}/>
         </div>
-        <InputLarge text="Bio:" ref={bioRef} setContent={setBio}/>
+        <InputLarge text="Bio:" content={bio} setContent={setBio} />
       </div>
       </>
     )
 
-    function setInputValue(setValue, promise, ref){
-        promise()
-          .then( value=>{
-            setValue(x=>value);
-            ref.current = value;
-          })
-          .catch(error=>console.error(error))
-        ;
+    function setInputValue(setValue, value, ref){
+        setValue(value);
+        ref.current = value === null? '':value;
     }
 
     async function saveUserInfo(){
         try {
-            console.log('saving now')
-            checkAndUpdate(name, nameRef, AUTH_setUserName);
-            checkAndUpdate(address, addressRef, AUTH_setUserName);
+            console.log('saving now');
+            await AUTH_setUserData({name, address, bio});
+            setDisableSaveButton(true);
+            
         } catch (error) {
             console.error(error);
         }
-        async function checkAndUpdate(value, ref, promise){
-            console.log('saving',{value, ref});
-            if(value != ref.current){
-                await promise(value);
-            }
-        }
+    }
 
+    function resetUserInfo(){
+        setDialogValue("Are you sure you want to reset the changes you've made?")
+        setdialogIsOpened(true);        
     }
 }
 
 
-const InputSmall = function({text='', ref, content, setContent}){
+const InputSmall = function({text='', content, setContent}){
     return (
         <div className={styles.inputSmall}>
             <p className='headerText1'>{text}</p>
             <input
                 type="text"
-                ref={ref}
                 value={content}
                 placeholder={`you haven't set your ${text}`}
                 onChange={e=>setContent(e.target.value)}

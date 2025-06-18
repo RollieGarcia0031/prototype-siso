@@ -1,0 +1,41 @@
+.main:open{
+    width: 20dvw;
+    background-color: var(--foreground2);
+    color: var(--background2);
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    padding: 30px;
+}
+
+.optionHolder{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 20px;
+    width: 80%;
+}
+
+.optionHolder button{
+    background-color: var(--background2);
+    color: var(--foreground2);
+    border: none;
+    padding: 10px;
+    border-radius: 10px;
+    flex: 1;
+    display: flex;
+    justify-content: center; align-items: center;
+    gap: 3px;
+    transition: 150ms;
+}
+.optionHolder button:hover{
+    filter: invert(1);
+}
+
+.errorMessage{
+    color: red;
+    font-style: italic;
+}

@@ -3,6 +3,9 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
+    overflow-y: auto;
+    margin-top: 10dvh;
+    padding: 10px;
 }
 
 .inputSmall{
@@ -15,6 +18,7 @@
 .inputLarge textarea{
     width: calc(100% - 30px);
     padding: 15px;
+    height: 40dvh;
 }
 
 .basicInfo{
@@ -28,8 +32,6 @@
     flex-direction: row;
     justify-content: space-evenly;
     width: 100%;
-    position: sticky;
-    top: 0;
     gap: 5px;
 }
 
@@ -50,10 +52,15 @@
 .optionButtonHolder button{
     background-color: unset;
     border: 1px solid white;
-    color: white;
+    color: var(--secondary);
     aspect-ratio: 1 / 1;
     border-radius: 100%;
     cursor: pointer;
+    transition: 500ms;
+}
+.optionButtonHolder button[disabled]{
+    color: var(--primary);
+    cursor: not-allowed;
 }
 .optionButtonHolder svg{
     font-size: 1.3rem;

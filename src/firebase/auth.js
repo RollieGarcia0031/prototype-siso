@@ -7,8 +7,8 @@ import {
 } from "firebase/auth";
 import { auth }from './config';
 import {
-    DB_getDisplayname,
-    DB_setDisplayName
+    DB_getUserData,
+    DB_setUserData
 } from './firestore'
 
 
@@ -49,11 +49,12 @@ export async function isLoggedIn(){
     });
 }
 
-export async function AUTH_getUserName(){
+export async function 
+AUTH_getData(){
     if(!isLoggedIn())return;
-    console.log('finding username')
     try {
-        return await DB_getDisplayname( (await AUTH_getUser()).uid );
+        const data = await DB_getUserData( (await AUTH_getUser()).uid ); 
+        return data;//get all raw data
     } catch (error) {
         console.error(error);
         throw error;
@@ -69,10 +70,10 @@ export async function AUTH_getUser(){
 }
 
 //setters
-export async function AUTH_setUserName(name){
+export async function AUTH_setUserData(data){
     if(!isLoggedIn())return;
     try{
-        await DB_setDisplayName((await AUTH_getUser())?.uid, name);
+        await DB_setUserData((await AUTH_getUser())?.uid, data);
     } catch(error){
         console.log(error);
         throw error;

@@ -9,18 +9,17 @@ import {
     deleteDoc,
     query,
     where,
-    getDocs
+    getDocs,
 } from "firebase/firestore"; 
 
 //getter
-export async function DB_getDisplayname(USER_ID){
+export async function DB_getUserData(USER_ID){
     try {
         const docRef = doc(db, usersCollectionRef, USER_ID);
         const docSnap = await getDoc(docRef);
 
-        console.log('found doc')
-        const displayName = docSnap.get('name');
-        return docSnap.exists()? displayName : null;
+        const data = docSnap.data();
+        return docSnap.exists()? data : null;
     } catch (error) {
         console.error(error);
         throw error;
@@ -29,12 +28,9 @@ export async function DB_getDisplayname(USER_ID){
 
 
 //setter
-export async function DB_setDisplayName(USER_ID, displayName){
+export async function DB_setUserData(USER_ID, data){
     try {
-        await setDoc( doc(db, usersCollectionRef, USER_ID),
-            {name: displayName},
-            {merge: true}
-        )
+        await setDoc( doc(db, usersCollectionRef, USER_ID), data, {merge: true} )
     } catch (error) {
         console.error(error)
         throw error;

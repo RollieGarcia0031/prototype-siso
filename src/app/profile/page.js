@@ -3,7 +3,7 @@
 import {useState, useEffect} from 'react';
 import styles from './page.module.css';
 import { FaEdit } from 'react-icons/fa'; 
-import { AUTH_getUserName } from '@/firebase/auth'
+import { AUTH_getData } from '@/firebase/auth'
 
 import Link from 'next/link'
 
@@ -21,7 +21,7 @@ function ProfileHeader(){
     useState(()=>{
         const unsub = async()=>{
             try {
-                const userName = await AUTH_getUserName();
+                const userName = (await AUTH_getData()).name;
                 if (userName?.length){setUserName(userName)}
                 else if (userName == undefined || userName == null){setUserName(null)}
             } catch (error) {
