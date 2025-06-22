@@ -74,7 +74,7 @@ export default function Edit(){
             setValue(initial);
           });
         }}
-    />
+      />
 
       <div className={styles.main}>
         <div className={styles.optionButtonHolder}>

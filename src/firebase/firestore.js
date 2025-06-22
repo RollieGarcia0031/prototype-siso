@@ -26,6 +26,14 @@ export async function DB_getUserData(USER_ID){
     }
 }
 
+export async function DB_getSongs(userId){
+    try {
+        console.log(userId)
+    } catch (error) {
+        console.error(error);
+    }
+}
+
 
 //setter
 export async function DB_setUserData(USER_ID, data){
