@@ -1,5 +1,5 @@
 import { db, auth } from "./config";
-import { usersCollectionRef } from '@/util/constants';
+import { CollectionRefs } from '@/util/constants';
 import {
     collection,
     doc,
@@ -10,12 +10,15 @@ import {
     query,
     where,
     getDocs,
-} from "firebase/firestore"; 
+} from "firebase/firestore";
+
+import { AUTH_getUser } from "./auth";
+import { SB_uploadSong } from "./storage"
 
 //getter
 export async function DB_getUserData(USER_ID){
     try {
-        const docRef = doc(db, usersCollectionRef, USER_ID);
+        const docRef = doc(db, CollectionRefs.user, USER_ID);
         const docSnap = await getDoc(docRef);
 
         const data = docSnap.data();
@@ -38,7 +41,7 @@ export async function DB_getSongs(userId){
 //setter
 export async function DB_setUserData(USER_ID, data){
     try {
-        await setDoc( doc(db, usersCollectionRef, USER_ID), data, {merge: true} )
+        await setDoc( doc(db, CollectionRefs.user, USER_ID), data, {merge: true} )
     } catch (error) {
         console.error(error)
         throw error;
@@ -49,6 +52,26 @@ const user = {
         name: '',
         address: '',
         bio: '',
+    }
+}
+
+export async function DB_uploadSong(file, metadata){
+    try {
+        const {uid} = await AUTH_getUser();
+        if (!uid)throw new Error("no account");
+        //upload to storage bucket
+        const uploadRef = await SB_uploadSong(file);
+        //save categorically in database (public/private)
+        const docRef = doc(collection(db, CollectionRefs.songs));
+        await setDoc(docRef,
+            {
+                ...metadata,
+                ref: uploadRef.ref.fullPath,
+                ownerID: uid
+            });
+    } catch (error) {
+        console.error(error);
+        throw error;
     }
 }
 

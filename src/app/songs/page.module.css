@@ -36,3 +36,60 @@
     padding: 20px;
     border-radius: 10px;
 }
+
+
+.uploadDialog:open{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    gap: 10px;
+    height: 70dvh;
+    aspect-ratio: 1 / 1;
+    padding: 30px;
+    border-radius: 20px;
+}
+.uploadDialog:open > :nth-child(1){
+    width: 100%;
+    display: flex;
+    justify-content: end;
+    align-items: end;
+}
+.uploadDialog:open > :nth-child(1) button{
+    padding:0;
+    background-color: unset;
+    border: 1px solid rgba(0, 0, 0, 0);
+    cursor: pointer;
+    transition: 300ms;
+}
+.uploadDialog:open >:nth-child(1) button:hover{
+    border: 1px solid rgba(0, 0, 0, 0.445);
+    transform: scale(1px, 1px);
+    border-radius: 5px;
+    color: red;
+}
+.uploadDialog:open > :nth-child(1) svg{
+    font-size: 1.5rem;
+}
+
+.uploadDialog:open > form{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    overflow-y: auto;
+    gap: 10px;
+}
+.uploadDialog:open > form > .dataTable {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: min-content auto;
+    grid-template-rows: auto auto auto 10dvh 30dvh;
+}
+.uploadDialog:open > form select{
+    border: none;
+}
+.uploadDialog:open > form input[type="submit"]{
+    padding: 10px 30px;
+    width: fit-content;
+    align-self: center;
+}
